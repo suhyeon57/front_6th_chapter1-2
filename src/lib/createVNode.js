@@ -1,3 +1,9 @@
 export function createVNode(type, props, ...children) {
-  return {};
+  return {
+    type,
+    props: {
+      ...props,
+    },
+    children: children.flat(),
+  };
 }
