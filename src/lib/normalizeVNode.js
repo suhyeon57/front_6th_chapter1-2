@@ -16,11 +16,25 @@ export function normalizeVNode(vNode) {
   }
 
   if (vNode && Array.isArray(vNode.children)) {
+    const normalizedProps = !vNode.props || Object.keys(vNode.props).length === 0 ? null : vNode.props;
     return {
       ...vNode,
+      props: normalizedProps,
       children: vNode.children
         .map(normalizeVNode)
         .filter((child) => child !== null && child !== undefined && child !== ""),
+    };
+  }
+
+  if (vNode && typeof vNode === "object") {
+    const normalizedProps = !vNode.props || Object.keys(vNode.props).length === 0 ? null : vNode.props;
+    const normalizedChildren = Array.isArray(vNode.children)
+      ? vNode.children.map(normalizeVNode).filter((child) => child !== null && child !== undefined && child !== "")
+      : [];
+    return {
+      ...vNode,
+      props: normalizedProps,
+      children: normalizedChildren,
     };
   }
 
