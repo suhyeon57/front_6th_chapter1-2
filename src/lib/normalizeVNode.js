@@ -1,5 +1,4 @@
-//"입력값을 항상 일관된 VNode 구조로 정리해서
-//렌더링 엔진이 예외 없이 동작하도록 보장하는 함수"입니다.
+//입력값을 항상 일관된 VNode 구조로 정리해서 렌더링 엔진이 예외 없이 동작하도록 보장하는 함수
 export function normalizeVNode(vNode) {
   if (vNode === null || vNode === undefined || typeof vNode === "boolean") {
     return "";
@@ -8,6 +7,7 @@ export function normalizeVNode(vNode) {
     return String(vNode);
   }
 
+  //재귀 호출로 함수형 컴포넌트 처리
   if (typeof vNode?.type === "function") {
     // props와 children을 함수에 전달
     const { props = {}, children = [] } = vNode;
