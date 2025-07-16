@@ -1,6 +1,6 @@
 import { defineConfig as defineTestConfig, mergeConfig } from "vitest/config";
 import { defineConfig } from "vite";
-//import { resolve } from "path";
+import { resolve } from "path";
 
 const base = process.env.NODE_ENV === "production" ? "/front_6th_chapter1-2/" : "";
 
@@ -9,11 +9,13 @@ export default mergeConfig(
     esbuild: {
       jsx: "transform",
       jsxFactory: "createVNode",
+      jsxDev: false,
     },
     optimizeDeps: {
       esbuildOptions: {
         jsx: "transform",
         jsxFactory: "createVNode",
+        jsxDev: false,
       },
     },
     base,
@@ -25,21 +27,14 @@ export default mergeConfig(
         output: {
           manualChunks: undefined,
         },
+        input: {
+          main: resolve(__dirname, "index.html"),
+          404: resolve(__dirname, "404.html"),
+        },
       },
     },
   }),
 
-  //   // build: {
-  //   //   outDir: "dist",
-  //   //   assetsDir: "assets",
-  //   //   sourcemap: false,
-  //   //   rollupOptions: {
-  //   //     output: {
-  //   //       manualChunks: undefined,
-  //   //     },
-  //   //   },
-  //   // },
-  // }),
   defineTestConfig({
     test: {
       globals: true,
