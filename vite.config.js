@@ -20,28 +20,30 @@ export default mergeConfig(
     build: {
       outDir: "dist",
       assetsDir: "assets",
+      sourcemap: false,
       rollupOptions: {
         input: {
           main: resolve(__dirname, "index.html"),
           404: resolve(__dirname, "404.html"),
-          output: {
-            manualChunks: undefined,
-          },
+        },
+        output: {
+          manualChunks: undefined,
         },
       },
     },
-
-    // build: {
-    //   outDir: "dist",
-    //   assetsDir: "assets",
-    //   sourcemap: false,
-    //   rollupOptions: {
-    //     output: {
-    //       manualChunks: undefined,
-    //     },
-    //   },
-    // },
   }),
+
+  //   // build: {
+  //   //   outDir: "dist",
+  //   //   assetsDir: "assets",
+  //   //   sourcemap: false,
+  //   //   rollupOptions: {
+  //   //     output: {
+  //   //       manualChunks: undefined,
+  //   //     },
+  //   //   },
+  //   // },
+  // }),
   defineTestConfig({
     test: {
       globals: true,
