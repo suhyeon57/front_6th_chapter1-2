@@ -18,10 +18,11 @@ export function renderElement(vNode, container) {
   const oldVNode = vnodeMap.get(container);
 
   if (!oldVNode) {
+    console.log("초기 렌더링");
     const dom = createElement(nextVNode);
     container.appendChild(dom);
   } else {
-    updateElement(container, nextVNode, oldVNode);
+    updateElement(container, nextVNode, oldVNode, 0);
   }
 
   setupEventListeners(container); // 이벤트 리스너 설정

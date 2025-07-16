@@ -3,10 +3,12 @@ import { addEvent, removeEvent } from "./eventManager";
 import { createElement } from "./createElement.js";
 
 //DOM 요소의 속성/이벤트를 비교해서 변경, 추가, 삭제
-function updateAttributes(target, originNewProps, originOldProps) {
+function updateAttributes(target, originNewProps, originOldProps = null) {
   Object.keys(originOldProps).forEach((key) => {
     if (!(key in originNewProps)) {
-      if (key.startsWith("on") && typeof originOldProps[key] === "function") {
+      if (key.startsWith("on")) {
+        //console.log("이벤트 변경", key, originNewProps[key], originOldProps[key]);
+
         removeEvent(target, key.slice(2).toLowerCase(), originOldProps[key]);
         //addEvent와 removeEvent가
         //실제 DOM의 addEventListener/removeEventListener까지 관리해야
@@ -25,7 +27,14 @@ function updateAttributes(target, originNewProps, originOldProps) {
 
   Object.keys(originNewProps).forEach((key) => {
     if (originNewProps[key] !== originOldProps[key]) {
+      //console.log("originNew key : ", originNewProps[key]);
+      //console.log("originOld key : ", originOldProps[key]);
       if (key.startsWith("on") && typeof originNewProps[key] === "function") {
+        if (originOldProps[key]) {
+          removeEvent(target, key.slice(2).toLowerCase(), originOldProps[key]);
+          target.removeEventListener(key.slice(2).toLowerCase(), originOldProps[key]);
+          //addEvent(target, key.slice(2).toLowerCase(), originNewProps[key]);
+        }
         addEvent(target, key.slice(2).toLowerCase(), originNewProps[key]);
       } else if (key === "className") {
         target.setAttribute("class", originNewProps[key]);
@@ -37,7 +46,7 @@ function updateAttributes(target, originNewProps, originOldProps) {
         target.setAttribute(key, originNewProps[key]);
       } else if (key === "checked") {
         target.checked = originNewProps[key]; // checked 속성은 boolean으로 설정
-        target.removeAttribute("checked"); // attribute는 항상 제거s
+        target.removeAttribute("checked"); // attribute는 항상 제거
       } else if (key === "disabled" || key === "readOnly") {
         target[key] = originNewProps[key]; // boolean 속성은 true로 설정
         if (originNewProps[key])
@@ -58,9 +67,6 @@ function updateAttributes(target, originNewProps, originOldProps) {
 
 //노드 타입, 태그, 텍스트, children 등을 비교해서 변경된 부분만 실제 DOM에 반영
 export function updateElement(parentElement, newNode, oldNode, index = 0) {
-  console.log("parentElement", parentElement);
-  console.log("newNode", newNode);
-  console.log("oldNode", oldNode);
   if (!newNode && !oldNode) return;
 
   if (newNode && !oldNode) {

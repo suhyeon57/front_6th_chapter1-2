@@ -1,5 +1,5 @@
 //createElement함수는 가상돔을 돔으로 변환해주는 것
-//import { addEvent } from "./eventManager";
+import { addEvent } from "./eventManager";
 
 export function createElement(vNode) {
   if (vNode === null || vNode === undefined || typeof vNode === "boolean") {
@@ -32,7 +32,7 @@ export function createElement(vNode) {
   Object.entries(vNode.props || {}).forEach(([key, value]) => {
     if (key.startsWith("on") && typeof value === "function") {
       const eventName = key.slice(2).toLowerCase();
-      $el.addEventListener(eventName, value);
+      addEvent($el, eventName, value);
     } else if (key === "className") {
       $el.setAttribute("class", value);
     } else if (key === "style" && typeof value === "object") {
