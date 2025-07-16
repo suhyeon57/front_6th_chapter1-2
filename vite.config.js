@@ -18,6 +18,7 @@ export default mergeConfig(
     },
     base,
     build: {
+      outDir: "dist",
       rollupOptions: {
         input: {
           main: resolve(__dirname, "index.html"),
