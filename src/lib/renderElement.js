@@ -18,7 +18,6 @@ export function renderElement(vNode, container) {
   const oldVNode = vnodeMap.get(container);
 
   if (!oldVNode) {
-    console.log("초기 렌더링");
     const dom = createElement(nextVNode);
     container.appendChild(dom);
   } else {

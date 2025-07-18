@@ -30,7 +30,6 @@ describe("Chapter1-2 > 심화과제 > Virtual DOM과 이벤트 관리", () => {
         </div>
       );
       renderElement(initialVNode, container);
-      console.log(container.innerHTML); // 디버깅용
 
       const originalH1 = container.querySelector("h1");
       const originalP = container.querySelector("p");
@@ -42,7 +41,6 @@ describe("Chapter1-2 > 심화과제 > Virtual DOM과 이벤트 관리", () => {
         </div>
       );
       renderElement(updatedVNode, container);
-      console.log(container.innerHTML); // 디버깅용
 
       expect(container.innerHTML).toBe("<div><h1>Updated Title</h1><p>Paragraph 1</p></div>");
       expect(container.querySelector("h1")).toBe(originalH1); // 같은 요소 참조 확인
@@ -397,7 +395,6 @@ describe("Chapter1-2 > 심화과제 > Virtual DOM과 이벤트 관리", () => {
         );
 
         renderElement(initialVNode, container);
-        console.log(container.innerHTML); // 디버깅용
         expect(container.firstChild.children.length).toBe(5);
 
         // 새 상태: 2개의 자식

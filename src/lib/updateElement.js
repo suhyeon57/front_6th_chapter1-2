@@ -3,7 +3,7 @@ import { addEvent, removeEvent } from "./eventManager";
 import { createElement } from "./createElement.js";
 
 //DOM 요소의 속성/이벤트를 비교해서 변경, 추가, 삭제
-function updateAttributes(target, originNewProps, originOldProps = null) {
+export function updateAttributes(target, originNewProps, originOldProps = null) {
   Object.keys(originOldProps).forEach((key) => {
     if (!(key in originNewProps)) {
       if (key.startsWith("on")) {
@@ -13,7 +13,7 @@ function updateAttributes(target, originNewProps, originOldProps = null) {
         //addEvent와 removeEvent가
         //실제 DOM의 addEventListener/removeEventListener까지 관리해야
         //이벤트가 완전히 제거됩니다.
-        target.removeEventListener(key.slice(2).toLowerCase(), originOldProps[key]);
+        //target.removeEventListener(key.slice(2).toLowerCase(), originOldProps[key]);
       } else if (key === "className") {
         target.removeAttribute("class");
       } else if (key === "checked" || key === "disabled" || key === "selected" || key === "readOnly") {
@@ -32,7 +32,7 @@ function updateAttributes(target, originNewProps, originOldProps = null) {
       if (key.startsWith("on") && typeof originNewProps[key] === "function") {
         if (originOldProps[key]) {
           removeEvent(target, key.slice(2).toLowerCase(), originOldProps[key]);
-          target.removeEventListener(key.slice(2).toLowerCase(), originOldProps[key]);
+          //target.removeEventListener(key.slice(2).toLowerCase(), originOldProps[key]);
           //addEvent(target, key.slice(2).toLowerCase(), originNewProps[key]);
         }
         addEvent(target, key.slice(2).toLowerCase(), originNewProps[key]);

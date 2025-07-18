@@ -196,8 +196,6 @@ describe("Chapter1-2 > 기본과제 > 가상돔 만들기 > ", () => {
           },
         },
       ])("$name", ({ vNode, expected }) => {
-        console.log("vNode:::::", vNode);
-        console.log("expected:::::", expected);
         expect(vNode).toEqual(expected);
       });
     });
